@@ -11,5 +11,5 @@ Follow link below to configure google.
 
 Follow link below to configure facebook.
 
-- [Library: firebase_messaging](https://pub.dev/packages/firebase_messaging)
-- [Documentation: firebase_doc](https://firebase.flutter.dev/docs/messaging/usage)
+- [Library: flutter_facebook_auth](https://pub.dev/packages/flutter_facebook_auth)
+- [Documentation: facebook_doc](https://facebook.meedu.app/docs/5.x.x/intro)

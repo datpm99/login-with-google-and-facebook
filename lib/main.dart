@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:login_with_google_and_fb/dialog_login_fb.dart';
 
 import 'dialog_login_gg.dart';
 
@@ -51,6 +53,33 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
+  Future<void> loginWithFB() async {
+    final result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      // you are logged
+      final userData = await FacebookAuth.instance.getUserData();
+
+      showDialog(
+        context: context,
+        builder: (ctx) => DialogLoginFaceBook(
+          name: userData['name'],
+          email: userData['email'],
+          img: userData['picture']['data']['url'],
+          logout: logoutFB,
+        ),
+      );
+    } else {
+      debugPrint('${result.status}');
+      debugPrint(result.message);
+    }
+  }
+
+  Future<void> logoutFB() async {
+    await FacebookAuth.instance.logOut();
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: loginWithFB,
                   child: Image.asset(
                     'assets/images/facebook.png',
                     width: 50,
